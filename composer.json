@@ -1,6 +1,7 @@
 {
     "name": "sogei/hessian",
     "description": "Composer implementation hessian library",
+    "type": "library",
     "authors": [
         {
             "name": "Alessandro Mancini",
