@@ -1,0 +1,39 @@
+<?php
+/*
+ * This file is an addition to the original HessianPHP package.
+ * (c) 2012 Massimo Squillace
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+class HessianBinary {
+    protected $data;
+
+    function __construct($data = null) {
+        $this->data = $data;
+    }
+
+    public function writeBinary() {
+        $len = strlen($this->data);
+        if($len < 16) {
+            return pack('C', $len + 0x20).$this->data;
+        }
+        if($len < 1024) {
+            $b1 = intval($len / 256);
+            $b0 = $len % 256;
+            return pack('CC', $b1 + 0x34, $b0).$this->data;
+        }
+        if($len > 1023) {
+            $stream = '';
+            for($pos = 0; $pos < $len; $pos += 65535) {
+                $rest = $len - $pos;
+                if($rest > 65536) {
+                    $stream .= 'A'.pack('n', 65535).substr($this->data, $pos, 65535);
+                } else {
+                    return $stream.'B'.pack('n', $rest).substr($this->data, -$rest);
+                }
+            }
+        }
+    }
+}

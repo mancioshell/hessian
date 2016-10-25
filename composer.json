@@ -1,0 +1,14 @@
+{
+    "name": "sogei/hessian",
+    "description": "Composer implementation hessian library",
+    "authors": [
+        {
+            "name": "Alessandro Mancini",
+            "email": "almancini@sogie.it"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
